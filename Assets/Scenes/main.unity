@@ -1784,29 +1784,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 35db02689c757fd4e966776bc7eb3873, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  binomeMoteurFilins:
-  - lines:
-    - {fileID: 0}
-    - {fileID: 0}
-    binomeMoteur: {fileID: 0}
-  lines:
-  - {fileID: 1154217660}
-  - {fileID: 908674895}
-  - {fileID: 318056654}
-  - {fileID: 2092406099}
-  distances: []
-  motorSteps: 
   setZero: 0
   sendPos: 0
   targetFps: 30
-  ESP:
-  - {fileID: 1087217079}
-  - {fileID: 1197424570}
-  filinToMotor:
-  - 2-2
-  - 2-1
-  - 1-2
-  - 1-1
+  binomeMoteurFilins:
+  - lines:
+    - {fileID: 1154217660}
+    - {fileID: 908674895}
+    distances: []
+    motorSteps: 
+    motorStepsZero: 
+    binomeMoteur: {fileID: 1197424570}
+  - lines:
+    - {fileID: 318056654}
+    - {fileID: 2092406099}
+    distances: []
+    motorSteps: 
+    motorStepsZero: 
+    binomeMoteur: {fileID: 1087217079}
 --- !u!1 &885768454
 GameObject:
   m_ObjectHideFlags: 0
