@@ -81,7 +81,7 @@ public class BinomeMoteur : MonoBehaviour
         }
 
         if(motor1TargetPosition != _previousMotor1TargetPosition) {
-            SetPosition(1, motor2TargetPosition);
+            SetPosition(1, motor1TargetPosition);
             _previousMotor1TargetPosition = motor1TargetPosition;
         }
 
@@ -104,6 +104,7 @@ public class BinomeMoteur : MonoBehaviour
     public void OnSerialMessage(string msg) {
         Debug.Log("[Binome] Got : " + msg);
         string[] strings= msg.Split(" ");
+        if(strings.Length ==1) {return;}
         switch (strings[1]) {
             case "version":
                 Debug.Log("[Binome] Version : " + strings[3]);
@@ -152,12 +153,12 @@ public class BinomeMoteur : MonoBehaviour
     }
 
     public void SetPosition(int motorID, int targetPosition) {
-        Debug.Log("[Binome] Set position");
+        //Debug.Log("[Binome] Set position");
         serial.SendMessage("motorTo " + motorID  + " " + targetPosition + " " + defaultSpeed + " " + defaultAcceleration);
     }
 
     public void SetSpeed(int motorID, int targetSpeed) {
-        Debug.Log("[Binome] Set speed");
+        //Debug.Log("[Binome] Set speed");
         serial.SendMessage("motorAt " + motorID  + " " + targetSpeed);
         
     }
@@ -168,5 +169,10 @@ public class BinomeMoteur : MonoBehaviour
             serial.SendMessage("disable");
         else
             serial.SendMessage("enable");
+    }
+
+    public void SetSpeedAndAcceleration(string speed) {
+        defaultAcceleration = int.Parse(speed, CultureInfo.InvariantCulture);
+        defaultSpeed = int.Parse(speed, CultureInfo.InvariantCulture);
     }
 }
