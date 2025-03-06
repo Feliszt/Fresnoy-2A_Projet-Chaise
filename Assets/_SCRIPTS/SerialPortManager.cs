@@ -24,8 +24,8 @@ public class SerialPortManager : MonoBehaviour
     private ConcurrentQueue<string> _messages = new ConcurrentQueue<string>();
 
     [Header("Settings")]
-    public string portName;
-    public int baudRate;
+    public string portName = "COM7";
+    public int baudRate = 115200;
     public float autoConnectDelay = 2f;
     private float _previousConnectionAttemptTime = 0f;
 
