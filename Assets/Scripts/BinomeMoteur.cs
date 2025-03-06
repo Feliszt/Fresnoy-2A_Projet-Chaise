@@ -1,6 +1,8 @@
 using UnityEngine;
 using System.Globalization;
+using System;
 
+[Serializable]
 public class MotorSettings
 {
     public bool enabled;

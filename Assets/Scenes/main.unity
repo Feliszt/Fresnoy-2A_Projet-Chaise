@@ -289,7 +289,7 @@ PlayableDirector:
   m_Enabled: 1
   serializedVersion: 3
   m_PlayableAsset: {fileID: 11400000, guid: f6f5e78353395f34d8f6de3a81ad4952, type: 2}
-  m_InitialState: 1
+  m_InitialState: 0
   m_WrapMode: 2
   m_DirectorUpdateMode: 1
   m_InitialTime: 0
@@ -348,37 +348,6 @@ Transform:
   - {fileID: 324462737}
   - {fileID: 1924927469}
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &249153882
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 249153883}
-  m_Layer: 0
-  m_Name: Port-02
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &249153883
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 249153882}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 677324670}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &318056652
 GameObject:
@@ -744,8 +713,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 330585543}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 1, z: -10}
+  m_LocalRotation: {x: 0.054309055, y: 0.94514686, z: -0.21066809, w: 0.24365315}
+  m_LocalPosition: {x: -0.6521919, y: 1.354175, z: 1.6849738}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1566,39 +1535,6 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 595046268}
   m_Mesh: {fileID: 10206, guid: 0000000000000000e000000000000000, type: 0}
---- !u!1 &677324669
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 677324670}
-  m_Layer: 0
-  m_Name: SerialCommunication
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &677324670
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 677324669}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.50958914, y: 0.6227267, z: -0.005290091}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 1020415691}
-  - {fileID: 249153883}
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &752315140
 GameObject:
   m_ObjectHideFlags: 0
@@ -1848,6 +1784,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 35db02689c757fd4e966776bc7eb3873, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  binomeMoteurFilins:
+  - lines:
+    - {fileID: 0}
+    - {fileID: 0}
+    binomeMoteur: {fileID: 0}
   lines:
   - {fileID: 1154217660}
   - {fileID: 908674895}
@@ -1857,15 +1798,15 @@ MonoBehaviour:
   motorSteps: 
   setZero: 0
   sendPos: 0
-  targetFps: 60
+  targetFps: 30
   ESP:
   - {fileID: 1087217079}
   - {fileID: 1197424570}
   filinToMotor:
-  - 1-1
-  - 1-2
-  - 2-1
   - 2-2
+  - 2-1
+  - 1-2
+  - 1-1
 --- !u!1 &885768454
 GameObject:
   m_ObjectHideFlags: 0
@@ -2413,72 +2354,6 @@ Transform:
   - {fileID: 484538694}
   m_Father: {fileID: 360515610}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &1020415690
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1020415691}
-  - component: {fileID: 1020415692}
-  m_Layer: 0
-  m_Name: Port-01
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1020415691
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1020415690}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 677324670}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1020415692
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1020415690}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b16026c555d6bd940a4ef9eaad226923, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  isRunning: 0
-  pendingData: 0
-  dataRate: 0
-  OnMessageReceived:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 763285400}
-        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-        m_MethodName: SendMessage
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-  portName: COM6
-  baudRate: 9600
-  autoConnectDelay: 2
-  reconnect: 0
 --- !u!1 &1087217077
 GameObject:
   m_ObjectHideFlags: 0
@@ -2543,6 +2418,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c8cdf7bd13203844abe743586f93fccb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  motor1Settings:
+    enabled: 0
+    speed: 0
+    actualPosition: 0
+    targetPosition: 0
+  motor2Settings:
+    enabled: 0
+    speed: 0
+    actualPosition: 0
+    targetPosition: 0
   codeVersion: 
   getVersion: 0
   resetPosition: 0
@@ -2775,7 +2660,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-  portName: COM7
+  portName: COM11
   baudRate: 115200
   autoConnectDelay: 2
   reconnect: 0
@@ -2791,6 +2676,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c8cdf7bd13203844abe743586f93fccb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  motor1Settings:
+    enabled: 0
+    speed: 0
+    actualPosition: 0
+    targetPosition: 0
+  motor2Settings:
+    enabled: 0
+    speed: 0
+    actualPosition: 0
+    targetPosition: 0
   codeVersion: 
   getVersion: 0
   resetPosition: 0
@@ -4879,7 +4774,6 @@ SceneRoots:
   - {fileID: 1717854807}
   - {fileID: 360515610}
   - {fileID: 845684486}
-  - {fileID: 677324670}
   - {fileID: 763285402}
   - {fileID: 1087217080}
   - {fileID: 1197424571}

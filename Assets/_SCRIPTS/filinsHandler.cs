@@ -1,7 +1,15 @@
+using System;
 using UnityEngine;
+
+[Serializable]
+public class BinomeMoteurFilin {
+     public lineController[] lines;
+     public BinomeMoteur binomeMoteur;
+}
 
 public class filinsHandler : MonoBehaviour
 {
+    public BinomeMoteurFilin[] binomeMoteurFilins;
     public lineController[] lines;
     public float[] distances;
     public int[] motorSteps;
