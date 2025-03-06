@@ -1,38 +1,38 @@
 using System;
+using Unity.VisualScripting;
 using UnityEngine;
 
 [Serializable]
 public class BinomeMoteurFilin {
-     public lineController[] lines;
-     public BinomeMoteur binomeMoteur;
+    public lineController[] lines;
+    public float[] distances;
+    public int[] motorSteps;
+    public int[] motorStepsZero;
+    public BinomeMoteur binomeMoteur;
 }
 
 public class filinsHandler : MonoBehaviour
 {
-    public BinomeMoteurFilin[] binomeMoteurFilins;
-    public lineController[] lines;
-    public float[] distances;
-    public int[] motorSteps;
-
 
     [Header("Motor control")]
-    private int[] motorStepsZero;
     public bool setZero;
     public bool sendPos = false;
     public int targetFps;
     private float previousTime;
 
     [Header("Links")]
-    public BinomeMoteur[] ESP;
-    public string[] filinToMotor;
+    public BinomeMoteurFilin[] binomeMoteurFilins;
 
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        distances = new float[lines.Length];
-        motorSteps = new int[lines.Length];
-        motorStepsZero = new int[lines.Length];
+        foreach (var b in binomeMoteurFilins)
+        {
+            b.distances = new float[b.lines.Length];
+            b.motorSteps = new int[b.lines.Length];
+            b.motorStepsZero = new int[b.lines.Length];
+        }
     }
 
     // Update is called once per frame
@@ -61,38 +61,45 @@ public class filinsHandler : MonoBehaviour
     //
     public void Zero()
     {
-        for (int i = 0; i < lines.Length; i++)
+        foreach (var b in binomeMoteurFilins)
         {
-            motorStepsZero[i] = (int)(distances[i] * 4244f);
+            for (int i = 0; i < b.lines.Length; i++) {
+                var ropeLengthPerRev = 0.09425f; //m
+                var nbStepsPerRev = 800.0f;
+                b.motorStepsZero[i] = (int)(b.distances[i] * nbStepsPerRev / ropeLengthPerRev);
+            }
         }
     }
 
     //
     public void setMotorSteps()
     {
-        for (int i = 0; i < lines.Length; i++)
+        foreach (var b in binomeMoteurFilins)
         {
-            distances[i] = lines[i].distanceBetween;
-            motorSteps[i] = (int)(distances[i] * 4244f) - motorStepsZero[i];
-            motorSteps[i] = -motorSteps[i];
+            for (int i = 0; i < b.lines.Length; i++) {
+                b.distances[i] = b.lines[i].distanceBetween;
+                var ropeLengthPerRev = 0.09425f; //m
+                var nbStepsPerRev = 800.0f;
 
-            if (Mathf.Approximately(motorSteps[i], 0f))
-            {
-                motorSteps[i] = 0;
+                b.motorSteps[i] = (int)(b.distances[i] * nbStepsPerRev / ropeLengthPerRev) - b.motorStepsZero[i];
+                b.motorSteps[i] = -b.motorSteps[i];
+
+                if (Mathf.Approximately(b.motorSteps[i], 0f))
+                {
+                    b.motorSteps[i] = 0;
+                }
             }
         }
     }
 
     public void sendPosToMotors()
     {
-        for (int i = 0; i < lines.Length; i++)
+        foreach (var b in binomeMoteurFilins)
         {
-            // get ESP and motor
-            int ESP_index = int.Parse(filinToMotor[i].Split("-")[0]);
-            int motor_index = int.Parse(filinToMotor[i].Split("-")[1]);
-
-            // send target pos
-            ESP[ESP_index - 1].SetPosition(motor_index, motorSteps[i]);
+            for (int i = 0; i < b.lines.Length; i++)
+            {
+                b.binomeMoteur.SetPosition(i+1, b.motorSteps[i]);
+            }
         }
     }
 }
