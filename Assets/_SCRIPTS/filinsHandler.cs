@@ -146,21 +146,19 @@ public class filinsHandler : MonoBehaviour
                 
                 float ropeLengthPerRev = 0.09425f; // m
                 float nbStepsPerRev = 800.0f;
-                b.derivatedSpeed[i] = -1.0f * (int)(speed * nbStepsPerRev / ropeLengthPerRev); // Steps per second
-
-                if (Mathf.Approximately(b.derivatedSpeed[i], 0f))
+                float computedSpeed = -1 * (int)(speed * nbStepsPerRev / ropeLengthPerRev); // Steps per second
+                
+                // Optionnel : Si le delta absolu dépasse trop le seuil, on peut ne pas l'appliquer complètement
+                if(Mathf.Abs(computedSpeed - b.previousSpeedValue[i]) >= b.speedOutThreshold)
                 {
-                    b.derivatedSpeed[i] = 0;
+                    Debug.LogError($"SKIPPED VALUE for cable {i}! Computed: {computedSpeed} ; Using value: {b.previousSpeedValue[i]}");
+                    // On peut choisir de conserver la vitesse précédente ou d'appliquer un lissage partiel
+                    computedSpeed = b.previousSpeedValue[i];
                 }
 
-                if(Mathf.Abs(b.derivatedSpeed[i] - b.previousSpeedValue[i]) >= b.speedOutThreshold) {
-                    Debug.LogError("SKIPPED VALUE ! Was : " + b.derivatedSpeed[i] + "  setting to " + b.previousSpeedValue[i]);
-                    b.derivatedSpeed[i] = b.previousSpeedValue[i];
-                }
-                else {
-                    b.previousSpeedValue[i] = b.derivatedSpeed[i];
-                }
-
+                b.derivatedSpeed[i] = computedSpeed;
+                // Mise à jour de la valeur précédente pour le prochain cycle
+                b.previousSpeedValue[i] = computedSpeed;
                 b.previousDistances[i] = b.distances[i];
             }
         }
