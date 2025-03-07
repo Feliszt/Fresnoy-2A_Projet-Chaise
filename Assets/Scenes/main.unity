@@ -998,7 +998,7 @@ PlayableDirector:
   m_GameObject: {fileID: 142246244}
   m_Enabled: 1
   serializedVersion: 3
-  m_PlayableAsset: {fileID: 11400000, guid: c18d37c14c02a9e44aca5112df044465, type: 2}
+  m_PlayableAsset: {fileID: 11400000, guid: d2b0ab274eb329846ae1895b3c57a918, type: 2}
   m_InitialState: 0
   m_WrapMode: 2
   m_DirectorUpdateMode: 1
@@ -1009,6 +1009,10 @@ PlayableDirector:
   - key: {fileID: 660005044114985159, guid: 76694d290e380104eb14cf39d1941550, type: 2}
     value: {fileID: 1477281942}
   - key: {fileID: 660005044114985159, guid: c18d37c14c02a9e44aca5112df044465, type: 2}
+    value: {fileID: 1477281942}
+  - key: {fileID: 660005044114985159, guid: 50f952eb154b35b44926383337d12468, type: 2}
+    value: {fileID: 1477281942}
+  - key: {fileID: 660005044114985159, guid: d2b0ab274eb329846ae1895b3c57a918, type: 2}
     value: {fileID: 1477281942}
   m_ExposedReferences:
     m_References:
@@ -4159,7 +4163,7 @@ MonoBehaviour:
     distances: []
     derivatedSpeed: []
     previousSpeedValue: []
-    speedOutThreshold: 500
+    speedOutThreshold: 5000
     previousDistances: []
     motorSteps: 
     motorStepsZero: 
@@ -4173,7 +4177,7 @@ MonoBehaviour:
     distances: []
     derivatedSpeed: []
     previousSpeedValue: []
-    speedOutThreshold: 500
+    speedOutThreshold: 5000
     previousDistances: []
     motorSteps: 
     motorStepsZero: 
@@ -5251,7 +5255,7 @@ MonoBehaviour:
   motor2TargetPosition: 0
   defaultSpeed: 500
   defaultAcceleration: 500
-  minMaxSpeed: {x: -5000, y: 5000}
+  minMaxSpeed: {x: -7000, y: 7000}
   motor1TargetSpeed: 0
   motor2TargetSpeed: 0
   serial: {fileID: 1087217078}
@@ -5609,7 +5613,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-  portName: COM16
+  portName: COM6
   baudRate: 115200
   autoConnectDelay: 2
   reconnect: 0
@@ -5646,7 +5650,7 @@ MonoBehaviour:
   motor2TargetPosition: 0
   defaultSpeed: 500
   defaultAcceleration: 500
-  minMaxSpeed: {x: -5000, y: 5000}
+  minMaxSpeed: {x: -7000, y: 7000}
   motor1TargetSpeed: 0
   motor2TargetSpeed: 0
   serial: {fileID: 1197424569}
