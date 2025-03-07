@@ -39,6 +39,8 @@ public class BinomeMoteur : MonoBehaviour
     public int defaultAcceleration = 100;
 
     [Header("Speed control")]
+
+    public Vector2 minMaxSpeed = new Vector2(-5000, 5000);
     public int motor1TargetSpeed;
     public int motor2TargetSpeed;
     private int _previousMotor1TargetSpeed;
@@ -159,7 +161,7 @@ public class BinomeMoteur : MonoBehaviour
 
     public void SetSpeed(int motorID, int targetSpeed) {
         //Debug.Log("[Binome] Set speed");
-        serial.SendMessage("motorAt " + motorID  + " " + targetSpeed);
+        serial.SendMessage("motorAt " + motorID  + " " + Mathf.Clamp(targetSpeed, (int)minMaxSpeed.x, (int)minMaxSpeed.y));
         
     }
 
@@ -172,7 +174,7 @@ public class BinomeMoteur : MonoBehaviour
     }
 
     public void SetSpeedAndAcceleration(string speed) {
-        defaultAcceleration = int.Parse(speed, CultureInfo.InvariantCulture);
-        defaultSpeed = int.Parse(speed, CultureInfo.InvariantCulture);
+        defaultAcceleration = Mathf.Clamp(int.Parse(speed, CultureInfo.InvariantCulture), (int)minMaxSpeed.x, (int)minMaxSpeed.y);
+        defaultSpeed = Mathf.Clamp(int.Parse(speed, CultureInfo.InvariantCulture), (int)minMaxSpeed.x, (int)minMaxSpeed.y);
     }
 }
