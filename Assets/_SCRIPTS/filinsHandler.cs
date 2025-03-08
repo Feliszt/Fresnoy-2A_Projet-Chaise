@@ -114,8 +114,7 @@ public class filinsHandler : MonoBehaviour
                 var ropeLengthPerRev = 0.09425f; //m
                 var nbStepsPerRev = 800.0f;
 
-                b.motorSteps[i] = (int)(b.distances[i] * nbStepsPerRev / ropeLengthPerRev) - b.motorStepsZero[i];
-                b.motorSteps[i] = -b.motorSteps[i];
+                b.motorSteps[i] = 1 * (int)(b.distances[i] * nbStepsPerRev / ropeLengthPerRev) - b.motorStepsZero[i];
 
                 if(i==0) {
                     b.motorSteps[i] += b.motor1Offset;
@@ -146,7 +145,7 @@ public class filinsHandler : MonoBehaviour
                 
                 float ropeLengthPerRev = 0.09425f; // m
                 float nbStepsPerRev = 800.0f;
-                float computedSpeed = -1 * (int)(speed * nbStepsPerRev / ropeLengthPerRev); // Steps per second
+                float computedSpeed = 1 * (int)(speed * nbStepsPerRev / ropeLengthPerRev); // Steps per second
                 
                 // Optionnel : Si le delta absolu dépasse trop le seuil, on peut ne pas l'appliquer complètement
                 if(Mathf.Abs(computedSpeed - b.previousSpeedValue[i]) >= b.speedOutThreshold)
