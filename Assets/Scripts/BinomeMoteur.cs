@@ -18,14 +18,17 @@ public class BinomeMoteur : MonoBehaviour
     public MotorSettings motor1Settings = new MotorSettings();
     public MotorSettings motor2Settings = new MotorSettings();
     public string codeVersion;
+    public string comPort;
 
     [Header("Controls")]
     public bool getVersion;
+    public bool motorDemo;
     public bool resetPosition;
     public bool getPosition;
     public bool setEnabled;
     public bool setDisabled;
-
+    public bool setMinMaxPosition;
+    public bool getMinMaxPosition;
     public bool ping;
 
     [Header("Position control")]
@@ -41,6 +44,7 @@ public class BinomeMoteur : MonoBehaviour
     [Header("Speed control")]
 
     public Vector2 minMaxSpeed = new Vector2(-5000, 5000);
+    public Vector2 minMaxPosition = new Vector2(-4000, 4000);
     public int motor1TargetSpeed;
     public int motor2TargetSpeed;
     private int _previousMotor1TargetSpeed;
@@ -48,6 +52,11 @@ public class BinomeMoteur : MonoBehaviour
 
     [Header("Links")]
     public SerialPortManager serial;
+
+    void Start()
+    {
+        comPort = serial.portName;   
+    }
 
     // Update is called once per frame
     void Update()
@@ -75,6 +84,19 @@ public class BinomeMoteur : MonoBehaviour
         if(setDisabled) {
             setDisabled = false;
             SetEnabled(false);
+        }
+
+        if(motorDemo) {
+            motorDemo = false;
+            DoMotorDemo();
+        }
+        if(setMinMaxPosition) {
+            setMinMaxPosition = false;
+            SetMinMaxPosition();
+        }
+        if(getMinMaxPosition) {
+            getMinMaxPosition = false;
+            GetMinMaxPosition();
         }
 
         if(ping) {
@@ -141,6 +163,15 @@ public class BinomeMoteur : MonoBehaviour
         Debug.Log("[Binome] Reset position");
         serial.SendMessage("reset");
     }
+
+    public void SetMinMaxPosition() {
+        Debug.Log("[Binome] Set min max position : " + minMaxPosition.x + " " + minMaxPosition.y);
+        serial.SendMessage("setMinMaxPos " + minMaxPosition.x + " " + minMaxPosition.y);
+    }
+    public void GetMinMaxPosition() {
+        Debug.Log("[Binome] Get min max position");
+        serial.SendMessage("getMinMaxPos");
+    }
     public void GetPosition() {
         Debug.Log("[Binome] Get position");
         serial.SendMessage("pos");
@@ -148,6 +179,10 @@ public class BinomeMoteur : MonoBehaviour
     public void Ping() {
         Debug.Log("[Binome] Ping");
         serial.SendMessage("ping");
+    }
+    public void DoMotorDemo() {
+        Debug.Log("[Binome] motorDemo");
+        serial.SendMessage("motorDemo");
     }
     public void GetVersion() {
         Debug.Log("[Binome] Get version");
