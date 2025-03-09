@@ -6,9 +6,9 @@ public class BinomeMoteurFilin {
     public string name;
     public lineController[] lines;
 
-    [Range(-1000, 1000)]
+    [Range(-2000, 2000)]
     public int motor1Offset;
-    [Range(-1000, 1000)]
+    [Range(-2000, 2000)]
     public int motor2Offset;
     public float[] distances;
     public float[] derivatedSpeed;
@@ -22,6 +22,9 @@ public class BinomeMoteurFilin {
 
 public class filinsHandler : MonoBehaviour
 {
+    [Header("Motor settings")]
+    public int stepsPerRev = 800;
+    public float ropeLengthPerRev = 0.1075f;
 
     [Header("Motor control")]
     public bool setZero;
@@ -58,6 +61,11 @@ public class filinsHandler : MonoBehaviour
             Zero();
         }
 
+        /*foreach(var b in binomeMoteurFilins)
+        {
+            b.motor1Offset = forcedMotorOffset;
+            b.motor2Offset = forcedMotorOffset;
+        }*/
         
         if (Time.time - previousTime >=  (1.0f / (float)targetFps))
         {
@@ -94,10 +102,7 @@ public class filinsHandler : MonoBehaviour
             {
                 b.distances[i] = b.lines[i].distanceBetween;
                 b.previousDistances[i] = b.distances[i];
-
-                var ropeLengthPerRev = 0.09425f; // m
-                var nbStepsPerRev = 800.0f;
-                b.motorStepsZero[i] = (int)(b.distances[i] * nbStepsPerRev / ropeLengthPerRev);
+                b.motorStepsZero[i] = (int)(b.distances[i] * stepsPerRev / ropeLengthPerRev);
                 b.derivatedSpeed[i] = 0;
                 b.previousSpeedValue[i] = 0;
             }
@@ -111,10 +116,8 @@ public class filinsHandler : MonoBehaviour
         {
             for (int i = 0; i < b.lines.Length; i++) {
                 b.distances[i] = b.lines[i].distanceBetween;
-                var ropeLengthPerRev = 0.09425f; //m
-                var nbStepsPerRev = 800.0f;
 
-                b.motorSteps[i] = 1 * (int)(b.distances[i] * nbStepsPerRev / ropeLengthPerRev) - b.motorStepsZero[i];
+                b.motorSteps[i] = 1 * (int)(b.distances[i] * stepsPerRev / ropeLengthPerRev) - b.motorStepsZero[i];
 
                 if(i==0) {
                     b.motorSteps[i] += b.motor1Offset;
