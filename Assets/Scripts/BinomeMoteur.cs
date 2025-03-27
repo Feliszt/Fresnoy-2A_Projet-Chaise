@@ -208,8 +208,17 @@ public class BinomeMoteur : MonoBehaviour
             serial.SendMessage("enable");
     }
 
+    public void SetDefaultSpeed(string speed) {
+        defaultSpeed = Mathf.Clamp(int.Parse(speed, CultureInfo.InvariantCulture), (int)minMaxSpeed.x, (int)minMaxSpeed.y);
+    }
+
+    public void SetDefaultAcceleration(string accel) {
+        defaultAcceleration = Mathf.Clamp(int.Parse(accel, CultureInfo.InvariantCulture), (int)minMaxSpeed.x, (int)minMaxSpeed.y);
+    }
+
     public void SetSpeedAndAcceleration(string speed) {
         defaultAcceleration = Mathf.Clamp(int.Parse(speed, CultureInfo.InvariantCulture), (int)minMaxSpeed.x, (int)minMaxSpeed.y);
         defaultSpeed = Mathf.Clamp(int.Parse(speed, CultureInfo.InvariantCulture), (int)minMaxSpeed.x, (int)minMaxSpeed.y);
+        
     }
 }

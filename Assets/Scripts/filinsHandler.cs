@@ -10,6 +10,8 @@ public class BinomeMoteurFilin {
     public int motor1Offset;
     [Range(-2000, 2000)]
     public int motor2Offset;
+    public bool motor1Inverse;
+    public bool motor2Inverse;
     public float[] distances;
     public float[] derivatedSpeed;
     public float[] previousSpeedValue;
@@ -77,7 +79,6 @@ public class filinsHandler : MonoBehaviour
                 if(sendSpeed) {
                     sendSpeed =false;
                 }
-
                 sendPosToMotors();
             }
 
@@ -100,9 +101,20 @@ public class filinsHandler : MonoBehaviour
         {
             for (int i = 0; i < b.lines.Length; i++)
             {
+                /*
+                int motorDir = 1;
+                if (i==0 && b.motor1Inverse){
+                    motorDir = -1;
+;
+                }
+                if (i==1 && b.motor2Inverse){
+                    motorDir = -1;
+                }
+                */
                 b.distances[i] = b.lines[i].distanceBetween;
                 b.previousDistances[i] = b.distances[i];
-                b.motorStepsZero[i] = (int)(b.distances[i] * stepsPerRev / ropeLengthPerRev);
+                //b.motorStepsZero[i] = motorDir * (int)(b.distances[i] * stepsPerRev / ropeLengthPerRev);
+                b.motorStepsZero[i] = 1 * (int)(b.distances[i] * stepsPerRev / ropeLengthPerRev);
                 b.derivatedSpeed[i] = 0;
                 b.previousSpeedValue[i] = 0;
             }
@@ -117,13 +129,32 @@ public class filinsHandler : MonoBehaviour
             for (int i = 0; i < b.lines.Length; i++) {
                 b.distances[i] = b.lines[i].distanceBetween;
 
-                b.motorSteps[i] = 1 * (int)(b.distances[i] * stepsPerRev / ropeLengthPerRev) - b.motorStepsZero[i];
+                /*
+                int motorDir = 1;
+                if (i==0 && b.motor1Inverse){
+                    motorDir = -1;
+;
+                }
+                if (i==1 && b.motor2Inverse){
+                    motorDir = -1;
+                }
+                b.motorSteps[i] =  motorDir * (int)(b.distances[i] * stepsPerRev / ropeLengthPerRev) - b.motorStepsZero[i];
+                */
+                b.motorSteps[i] =  1 * (int)(b.distances[i] * stepsPerRev / ropeLengthPerRev) - b.motorStepsZero[i];
 
+                /*
                 if(i==0) {
-                    b.motorSteps[i] += b.motor1Offset;
+                    b.motorSteps[i] += motorDir * b.motor1Offset;
                 }
                 if(i==1) {
-                    b.motorSteps[i] += b.motor2Offset;
+                    b.motorSteps[i] += motorDir * b.motor2Offset;
+                }
+                */
+                if(i==0) {
+                    b.motorSteps[i] += 1 * b.motor1Offset;
+                }
+                if(i==1) {
+                    b.motorSteps[i] += 1 * b.motor2Offset;
                 }
 
                 if (Mathf.Approximately(b.motorSteps[i], 0f))
@@ -145,10 +176,7 @@ public class filinsHandler : MonoBehaviour
                 
                 b.distances[i] = b.lines[i].distanceBetween;
                 float speed = (b.distances[i] - b.previousDistances[i]) / deltaTime; // m/s
-                
-                float ropeLengthPerRev = 0.09425f; // m
-                float nbStepsPerRev = 800.0f;
-                float computedSpeed = 1 * (int)(speed * nbStepsPerRev / ropeLengthPerRev); // Steps per second
+                float computedSpeed = 1 * (int)(speed * stepsPerRev / ropeLengthPerRev); // Steps per second
                 
                 // Optionnel : Si le delta absolu dépasse trop le seuil, on peut ne pas l'appliquer complètement
                 if(Mathf.Abs(computedSpeed - b.previousSpeedValue[i]) >= b.speedOutThreshold)
@@ -172,15 +200,23 @@ public class filinsHandler : MonoBehaviour
     {
         foreach (var b in binomeMoteurFilins)
         {
-            b.binomeMoteur.motor1TargetSpeed = (int)b.derivatedSpeed[0];
-            b.binomeMoteur.motor2TargetSpeed = (int)b.derivatedSpeed[1];
+            if (b.motor1Inverse) {
+                b.binomeMoteur.motor1TargetSpeed = - (int)b.derivatedSpeed[0];
+            } else {
+                b.binomeMoteur.motor1TargetSpeed = (int)b.derivatedSpeed[0];
+            }
+
+            if (b.motor2Inverse) {
+                b.binomeMoteur.motor2TargetSpeed = - (int)b.derivatedSpeed[1];
+            } else {
+                b.binomeMoteur.motor2TargetSpeed = (int)b.derivatedSpeed[1];
+            }
             
-            // for (int i = 0; i < b.lines.Length; i++)
-            // {
-            //     b.binomeMoteur.SetSpeed(i+1, (int)b.derivatedSpeed[i]);
-            // }
+            //b.binomeMoteur.motor1TargetSpeed = (int)b.derivatedSpeed[0];
+            //b.binomeMoteur.motor2TargetSpeed = (int)b.derivatedSpeed[1];
         }
     }
+    
     private string speedData;
     private string stepsData;
     public void OnApplicationQuit()
@@ -188,12 +224,22 @@ public class filinsHandler : MonoBehaviour
         Debug.LogWarning("speedData" + speedData);
         Debug.LogWarning("stepsData" + stepsData);
     }
+
     public void sendPosToMotors()
     {
         foreach (var b in binomeMoteurFilins)
         {
-            b.binomeMoteur.motor1TargetPosition = b.motorSteps[0];
-            b.binomeMoteur.motor2TargetPosition = b.motorSteps[1];
+            if (b.motor1Inverse) {
+                b.binomeMoteur.motor1TargetPosition = - b.motorSteps[0];
+            } else {
+                b.binomeMoteur.motor1TargetPosition = b.motorSteps[0];
+            }
+            
+            if (b.motor2Inverse) {
+                b.binomeMoteur.motor2TargetPosition = - b.motorSteps[1];
+            } else {
+                b.binomeMoteur.motor2TargetPosition = b.motorSteps[1];
+            }
         }
     }
 
