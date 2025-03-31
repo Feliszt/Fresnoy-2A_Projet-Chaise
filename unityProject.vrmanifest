@@ -1,0 +1,16 @@
+{
+  "source": "Unity",
+  "applications": [
+    {
+      "app_key": "application.generated.unity.cdpr_unity_protocontrol.exe",
+      "launch_type": "url",
+      "url": "steam://launch/",
+      "action_manifest_path": "C:\\Users\\Administrateur\\FRESNOY-2A\\Le-Roi-Se-Meurt\\Fresnoy-2A_Projet-Chaise\\Assets\\StreamingAssets\\SteamVR\\actions.json",
+      "strings": {
+        "en_us": {
+          "name": "CDPR_Unity_proto-control [Testing]"
+        }
+      }
+    }
+  ]
+}

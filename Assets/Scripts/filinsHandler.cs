@@ -6,9 +6,9 @@ public class BinomeMoteurFilin {
     public string name;
     public lineController[] lines;
 
-    [Range(-2000, 2000)]
+    [Range(-5000, 5000)]
     public int motor1Offset;
-    [Range(-2000, 2000)]
+    [Range(-5000, 5000)]
     public int motor2Offset;
     public bool motor1Inverse;
     public bool motor2Inverse;
