@@ -26,7 +26,8 @@ public class filinsHandler : MonoBehaviour
 {
     [Header("Motor settings")]
     public int stepsPerRev = 800;
-    public float ropeLengthPerRev = 0.1075f;
+    public float ropeLengthPerRevHigh = 0.1075f;
+    public float ropeLengthPerRevLow = 0.1075f;
 
     [Header("Motor control")]
     public bool setZero;
@@ -101,20 +102,15 @@ public class filinsHandler : MonoBehaviour
         {
             for (int i = 0; i < b.lines.Length; i++)
             {
-                /*
-                int motorDir = 1;
-                if (i==0 && b.motor1Inverse){
-                    motorDir = -1;
-;
-                }
-                if (i==1 && b.motor2Inverse){
-                    motorDir = -1;
-                }
-                */
+
                 b.distances[i] = b.lines[i].distanceBetween;
                 b.previousDistances[i] = b.distances[i];
-                //b.motorStepsZero[i] = motorDir * (int)(b.distances[i] * stepsPerRev / ropeLengthPerRev);
-                b.motorStepsZero[i] = 1 * (int)(b.distances[i] * stepsPerRev / ropeLengthPerRev);
+                if (i == 0) {
+                    b.motorStepsZero[i] = 1 * (int)(b.distances[i] * stepsPerRev / ropeLengthPerRevHigh);
+                }
+                if (i == 1) {
+                    b.motorStepsZero[i] = 1 * (int)(b.distances[i] * stepsPerRev / ropeLengthPerRevLow);
+                }
                 b.derivatedSpeed[i] = 0;
                 b.previousSpeedValue[i] = 0;
             }
@@ -129,31 +125,12 @@ public class filinsHandler : MonoBehaviour
             for (int i = 0; i < b.lines.Length; i++) {
                 b.distances[i] = b.lines[i].distanceBetween;
 
-                /*
-                int motorDir = 1;
-                if (i==0 && b.motor1Inverse){
-                    motorDir = -1;
-;
-                }
-                if (i==1 && b.motor2Inverse){
-                    motorDir = -1;
-                }
-                b.motorSteps[i] =  motorDir * (int)(b.distances[i] * stepsPerRev / ropeLengthPerRev) - b.motorStepsZero[i];
-                */
-                b.motorSteps[i] =  1 * (int)(b.distances[i] * stepsPerRev / ropeLengthPerRev) - b.motorStepsZero[i];
-
-                /*
-                if(i==0) {
-                    b.motorSteps[i] += motorDir * b.motor1Offset;
-                }
-                if(i==1) {
-                    b.motorSteps[i] += motorDir * b.motor2Offset;
-                }
-                */
-                if(i==0) {
+                if (i == 0) {
+                    b.motorSteps[i] =  1 * (int)(b.distances[i] * stepsPerRev / ropeLengthPerRevHigh) - b.motorStepsZero[i];
                     b.motorSteps[i] += 1 * b.motor1Offset;
                 }
-                if(i==1) {
+                if (i == 1) {
+                    b.motorSteps[i] =  1 * (int)(b.distances[i] * stepsPerRev / ropeLengthPerRevLow) - b.motorStepsZero[i];
                     b.motorSteps[i] += 1 * b.motor2Offset;
                 }
 
@@ -176,7 +153,7 @@ public class filinsHandler : MonoBehaviour
                 
                 b.distances[i] = b.lines[i].distanceBetween;
                 float speed = (b.distances[i] - b.previousDistances[i]) / deltaTime; // m/s
-                float computedSpeed = 1 * (int)(speed * stepsPerRev / ropeLengthPerRev); // Steps per second
+                float computedSpeed = 1 * (int)(speed * stepsPerRev / ropeLengthPerRevHigh); // Steps per second
                 
                 // Optionnel : Si le delta absolu dépasse trop le seuil, on peut ne pas l'appliquer complètement
                 if(Mathf.Abs(computedSpeed - b.previousSpeedValue[i]) >= b.speedOutThreshold)
