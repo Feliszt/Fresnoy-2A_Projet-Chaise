@@ -4,12 +4,13 @@ using UnityEngine;
 
 public class GoToPose : MonoBehaviour
 {
+    public Transform objectToMove;
     public Transform targetPose;
     public Transform zeroPose;
     private Transform trueTargetPose;
     private Transform fromPose;
-    [Range(0.00001f, 0.001f)]
-    public float speed = 0.0001f;
+    [Range(0.0001f, 0.01f)]
+    public float speed = 0.001f;
     private float timeCount = 0.0f;
     public Boolean goToTarget = false;
     public Boolean goToZero = false;
@@ -31,19 +32,19 @@ public class GoToPose : MonoBehaviour
     {
         go = goToTarget ^ goToZero;
 
-        if (goToTarget) {
+        if (!going && goToTarget) {
             trueTargetPose = targetPose;
             Debug.Log("go to target!");
         }
 
-        if (goToZero) {
+        if (!going && goToZero) {
             trueTargetPose = zeroPose;
             Debug.Log("go to zero!");
         }
 
         if (go && !goPrev) {
             timeCount = 0.0f;
-            fromPose = transform;
+            fromPose = objectToMove.transform;
             goToTarget = false;
             goToZero = false;
             go = false;
@@ -51,16 +52,15 @@ public class GoToPose : MonoBehaviour
         }
 
         if (going) {
-
-            transform.position = Vector3.Lerp(fromPose.position, trueTargetPose.position, timeCount * speed);
-            transform.rotation = Quaternion.Lerp(fromPose.rotation, trueTargetPose.rotation, timeCount * speed);
+            objectToMove.position = Vector3.Lerp(fromPose.position, trueTargetPose.position, timeCount * speed);
+            objectToMove.rotation = Quaternion.Lerp(fromPose.rotation, trueTargetPose.rotation, timeCount * speed);
         }
 
-        distToTarget = Vector3.Distance(transform.position, trueTargetPose.position) + Vector3.Distance(transform.eulerAngles, trueTargetPose.eulerAngles);
+        distToTarget = Vector3.Distance(objectToMove.position, trueTargetPose.position) + Vector3.Distance(objectToMove.eulerAngles, trueTargetPose.eulerAngles);
         if (distToTarget <= 0.001f) {
             going = false;
-            transform.position = trueTargetPose.position;
-            transform.rotation = trueTargetPose.rotation;
+            objectToMove.position = trueTargetPose.position;
+            objectToMove.rotation = trueTargetPose.rotation;
         }
 
         if (!going && goingPrev) {
@@ -70,5 +70,9 @@ public class GoToPose : MonoBehaviour
         timeCount += Time.deltaTime;
         goPrev = go;
         goingPrev = going;
+    }
+
+    public bool isGoing() {
+        return going;
     }
 }
