@@ -1,0 +1,6 @@
+{
+    "ESP32_SudEst": "COM4",
+    "ESP32_SudOuest": "COM5",
+    "ESP32_NordEst": "COM3",
+    "ESP32_NordOuest": "COM6"
+}
