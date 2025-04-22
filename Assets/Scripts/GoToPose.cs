@@ -75,4 +75,8 @@ public class GoToPose : MonoBehaviour
     public bool isGoing() {
         return going;
     }
+
+    public void setGoToZero() {
+        goToZero = true;
+    }
 }

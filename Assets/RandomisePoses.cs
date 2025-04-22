@@ -48,4 +48,9 @@ public class RandomisePoses : MonoBehaviour
         );
         return new Tuple<Vector3, Vector3>(randomPosition, randomRotation);
     }
+
+    public void toggleRandomizePoses()
+    {
+        randomisePoses = !randomisePoses;
+    }
 }

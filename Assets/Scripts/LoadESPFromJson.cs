@@ -30,6 +30,8 @@ public class LoadESPFromJson : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Awake()
     {  
+        Debug.Log(Application.dataPath + "/Data/");
+        
         // load file
         settingsFilePath += settingsFileName + ".json";
         if (!System.IO.File.Exists(settingsFilePath))
