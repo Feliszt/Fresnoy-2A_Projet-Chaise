@@ -9,7 +9,7 @@ public class GoToPose : MonoBehaviour
     public Transform zeroPose;
     private Transform trueTargetPose;
     private Transform fromPose;
-    [Range(0.0001f, 0.01f)]
+    [Range(0.0001f, 0.1f)]
     public float speed = 0.001f;
     private float timeCount = 0.0f;
     public Boolean goToTarget = false;
