@@ -73,7 +73,7 @@ public class filinsHandler : MonoBehaviour
         if (Time.time - previousTime >=  (1.0f / (float)targetFps))
         {
             UpdateMotorSteps();
-            UpdateMotorSpeeds();
+            //UpdateMotorSpeeds();
 
             if (sendPos)
             {
@@ -158,7 +158,7 @@ public class filinsHandler : MonoBehaviour
                 // Optionnel : Si le delta absolu dépasse trop le seuil, on peut ne pas l'appliquer complètement
                 if(Mathf.Abs(computedSpeed - b.previousSpeedValue[i]) >= b.speedOutThreshold)
                 {
-                    Debug.LogError($"SKIPPED VALUE for cable {i}! Computed: {computedSpeed} ; Using value: {b.previousSpeedValue[i]}");
+                    //Debug.LogError($"SKIPPED VALUE for cable {i}! Computed: {computedSpeed} ; Using value: {b.previousSpeedValue[i]}");
                     // On peut choisir de conserver la vitesse précédente ou d'appliquer un lissage partiel
                     computedSpeed = b.previousSpeedValue[i];
                 }
