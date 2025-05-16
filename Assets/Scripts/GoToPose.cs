@@ -79,4 +79,12 @@ public class GoToPose : MonoBehaviour
     public void setGoToZero() {
         goToZero = true;
     }
+
+    public void setGoToTarget() {
+        goToTarget = true;
+    }
+
+    public void setSpeed(float _speed) {
+        speed = _speed;
+    }
 }

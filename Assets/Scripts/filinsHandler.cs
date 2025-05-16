@@ -73,7 +73,7 @@ public class filinsHandler : MonoBehaviour
         if (Time.time - previousTime >=  (1.0f / (float)targetFps))
         {
             UpdateMotorSteps();
-            //UpdateMotorSpeeds();
+            UpdateMotorSpeeds();
 
             if (sendPos)
             {
