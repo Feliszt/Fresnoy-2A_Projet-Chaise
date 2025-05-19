@@ -1,21 +1,22 @@
+using System.Linq;
 using UnityEngine;
 
-[ExecuteInEditMode]
 public class changePivotPoint : MonoBehaviour
 {
-    public Transform child;
+    public Transform objects;
     public Vector3 pivotPoint;
+    private Vector3 startPos;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        pivotPoint = transform.position;
+        startPos = objects.localPosition;
     }
 
     // Update is called once per frame
     void Update()
     {
-        transform.position = pivotPoint;
-        child.localPosition = -pivotPoint;
+        objects.localPosition = startPos + pivotPoint;
+        objects.GetChild(0).transform.localPosition = startPos - pivotPoint;
     }
 }

@@ -1,12 +1,13 @@
 using UnityEngine;
 
+[ExecuteInEditMode]
 public class FollowPose : MonoBehaviour
 {
 
     public Transform objectToMove;
     public Transform targetPose;
 
-    [Range(0.01f, 1.0f)]
+    [Range(0.01f, 10.0f)]
     public float speed = 0.01f;
     private Transform fromPose;
     private float timeCount = 0.0f;
