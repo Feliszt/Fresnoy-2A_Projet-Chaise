@@ -7,6 +7,7 @@ public class GoToPose : MonoBehaviour
     public Transform objectToMove;
     public Transform targetPose;
     public Transform zeroPose;
+    public Transform firstPose;
     private Transform trueTargetPose;
     private Transform fromPose;
     [Range(0.0001f, 0.1f)]
@@ -14,6 +15,7 @@ public class GoToPose : MonoBehaviour
     private float timeCount = 0.0f;
     public Boolean goToTarget = false;
     public Boolean goToZero = false;
+    public Boolean goToFirst = false;
     private Boolean go = false;
     private Boolean goPrev = false;
     private Boolean going = false;
@@ -30,7 +32,7 @@ public class GoToPose : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        go = goToTarget ^ goToZero;
+        go = goToTarget ^ goToZero ^ goToFirst;
 
         if (!going && goToTarget) {
             trueTargetPose = targetPose;
@@ -41,12 +43,19 @@ public class GoToPose : MonoBehaviour
             trueTargetPose = zeroPose;
             Debug.Log("go to zero!");
         }
+        
+        if (!going && goToFirst) {
+            trueTargetPose = firstPose;
+            Debug.Log("go to first!");
+        }
 
-        if (go && !goPrev) {
+        if (go && !goPrev)
+        {
             timeCount = 0.0f;
             fromPose = objectToMove.transform;
             goToTarget = false;
             goToZero = false;
+            goToFirst = false;
             go = false;
             going = true;
         }
@@ -83,8 +92,13 @@ public class GoToPose : MonoBehaviour
     public void setGoToTarget() {
         goToTarget = true;
     }
+    
+    public void setGoToFirst() {
+        goToFirst = true;
+    }
 
-    public void setSpeed(float _speed) {
+    public void setSpeed(float _speed)
+    {
         speed = _speed;
     }
 }
