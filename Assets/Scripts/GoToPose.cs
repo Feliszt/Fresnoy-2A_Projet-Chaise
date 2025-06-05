@@ -11,7 +11,7 @@ public class GoToPose : MonoBehaviour
     private Transform trueTargetPose;
     private Transform fromPose;
     [Range(0.0001f, 0.1f)]
-    public float speed = 0.001f;
+    public float speed = 0.0006f;
     private float timeCount = 0.0f;
     public Boolean goToTarget = false;
     public Boolean goToZero = false;

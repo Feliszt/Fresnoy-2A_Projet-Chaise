@@ -126,7 +126,7 @@ public class BinomeMoteur : MonoBehaviour
     }
 
     public void OnSerialMessage(string msg) {
-        Debug.Log("[Binome] Got : " + msg);
+        //Debug.Log("[Binome] Got : " + msg);
         string[] strings= msg.Split(" ");
         if(strings.Length ==1) {return;}
         switch (strings[1]) {

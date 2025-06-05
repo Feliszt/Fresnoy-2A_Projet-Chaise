@@ -170,7 +170,7 @@ public class SerialPortManager : MonoBehaviour
     /// <param name="message">Le message � envoyer.</param>
     public void SendMessage(string message)
     {
-        Debug.Log("Sending : " +  message);
+        //Debug.Log("Sending : " +  message);
         try
         {
             if (serialPort != null && serialPort.IsOpen)
