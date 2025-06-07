@@ -8,7 +8,7 @@ public class FollowPose : MonoBehaviour
     public Transform targetPose;
 
     [Range(0.01f, 20.0f)]
-    public float speed = 0.01f;
+    public float speed = 15f;
     private Transform fromPose;
     private float timeCount = 0.0f;
 
