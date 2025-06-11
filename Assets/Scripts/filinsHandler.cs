@@ -1,4 +1,5 @@
 using System;
+using extOSC.Examples;
 using UnityEngine;
 
 [Serializable]
@@ -6,9 +7,9 @@ public class BinomeMoteurFilin {
     public string name;
     public lineController[] lines;
 
-    [Range(-5000, 5000)]
+    [Range(-1000, 1000)]
     public int motor1Offset;
-    [Range(-5000, 5000)]
+    [Range(-1000, 1000)]
     public int motor2Offset;
     public bool motor1Inverse;
     public bool motor2Inverse;
@@ -69,16 +70,16 @@ public class filinsHandler : MonoBehaviour
             b.motor1Offset = forcedMotorOffset;
             b.motor2Offset = forcedMotorOffset;
         }*/
-        
-        if (Time.time - previousTime >=  (1.0f / (float)targetFps))
+
+        if (Time.time - previousTime >= (1.0f / (float)targetFps))
         {
             UpdateMotorSteps();
             UpdateMotorSpeeds();
 
             if (sendPos)
             {
-                if(sendSpeed) {
-                    sendSpeed =false;
+                if (sendSpeed) {
+                    sendSpeed = false;
                 }
                 sendPosToMotors();
             }
@@ -86,8 +87,8 @@ public class filinsHandler : MonoBehaviour
 
             if (sendSpeed)
             {
-                if(sendPos) {
-                    sendPos =false;
+                if (sendPos) {
+                    sendPos = false;
                 }
                 SendSpeedToMotors();
             }
@@ -122,15 +123,20 @@ public class filinsHandler : MonoBehaviour
     {
         foreach (var b in binomeMoteurFilins)
         {
-            for (int i = 0; i < b.lines.Length; i++) {
+            for (int i = 0; i < b.lines.Length; i++)
+            {
                 b.distances[i] = b.lines[i].distanceBetween;
 
-                if (i == 0) {
-                    b.motorSteps[i] =  1 * (int)(b.distances[i] * stepsPerRev / ropeLengthPerRevHigh) - b.motorStepsZero[i];
+                if (i == 0)
+                {
+                    b.motorSteps[i] = 1 * (int)(b.distances[i] * stepsPerRev / ropeLengthPerRevHigh) - b.motorStepsZero[i];
+                    b.motor1Offset = (int)map(b.motorSteps[i], -5000, 5000, 300, -300);
                     b.motorSteps[i] += 1 * b.motor1Offset;
                 }
-                if (i == 1) {
-                    b.motorSteps[i] =  1 * (int)(b.distances[i] * stepsPerRev / ropeLengthPerRevLow) - b.motorStepsZero[i];
+                if (i == 1)
+                {
+                    b.motorSteps[i] = 1 * (int)(b.distances[i] * stepsPerRev / ropeLengthPerRevLow) - b.motorStepsZero[i];
+                    b.motor2Offset = (int)map(b.motorSteps[i], -5000, 5000, 300, -300);
                     b.motorSteps[i] += 1 * b.motor2Offset;
                 }
 
@@ -150,13 +156,13 @@ public class filinsHandler : MonoBehaviour
         {
             for (int i = 0; i < b.lines.Length; i++)
             {
-                
+
                 b.distances[i] = b.lines[i].distanceBetween;
                 float speed = (b.distances[i] - b.previousDistances[i]) / deltaTime; // m/s
                 float computedSpeed = 1 * (int)(speed * stepsPerRev / ropeLengthPerRevHigh); // Steps per second
-                
+
                 // Optionnel : Si le delta absolu dépasse trop le seuil, on peut ne pas l'appliquer complètement
-                if(Mathf.Abs(computedSpeed - b.previousSpeedValue[i]) >= b.speedOutThreshold)
+                if (Mathf.Abs(computedSpeed - b.previousSpeedValue[i]) >= b.speedOutThreshold)
                 {
                     //Debug.LogError($"SKIPPED VALUE for cable {i}! Computed: {computedSpeed} ; Using value: {b.previousSpeedValue[i]}");
                     // On peut choisir de conserver la vitesse précédente ou d'appliquer un lissage partiel
@@ -178,22 +184,22 @@ public class filinsHandler : MonoBehaviour
         foreach (var b in binomeMoteurFilins)
         {
             if (b.motor1Inverse) {
-                b.binomeMoteur.motor1TargetSpeed = - (int)b.derivatedSpeed[0];
+                b.binomeMoteur.motor1TargetSpeed = -(int)b.derivatedSpeed[0];
             } else {
                 b.binomeMoteur.motor1TargetSpeed = (int)b.derivatedSpeed[0];
             }
 
             if (b.motor2Inverse) {
-                b.binomeMoteur.motor2TargetSpeed = - (int)b.derivatedSpeed[1];
+                b.binomeMoteur.motor2TargetSpeed = -(int)b.derivatedSpeed[1];
             } else {
                 b.binomeMoteur.motor2TargetSpeed = (int)b.derivatedSpeed[1];
             }
-            
+
             //b.binomeMoteur.motor1TargetSpeed = (int)b.derivatedSpeed[0];
             //b.binomeMoteur.motor2TargetSpeed = (int)b.derivatedSpeed[1];
         }
     }
-    
+
     private string speedData;
     private string stepsData;
     public void OnApplicationQuit()
@@ -207,13 +213,13 @@ public class filinsHandler : MonoBehaviour
         foreach (var b in binomeMoteurFilins)
         {
             if (b.motor1Inverse) {
-                b.binomeMoteur.motor1TargetPosition = - b.motorSteps[0];
+                b.binomeMoteur.motor1TargetPosition = -b.motorSteps[0];
             } else {
                 b.binomeMoteur.motor1TargetPosition = b.motorSteps[0];
             }
-            
+
             if (b.motor2Inverse) {
-                b.binomeMoteur.motor2TargetPosition = - b.motorSteps[1];
+                b.binomeMoteur.motor2TargetPosition = -b.motorSteps[1];
             } else {
                 b.binomeMoteur.motor2TargetPosition = b.motorSteps[1];
             }
@@ -234,5 +240,10 @@ public class filinsHandler : MonoBehaviour
 
     public void SetZero() {
         Zero();
+    }
+    
+    public float map(float s, float a1, float a2, float b1, float b2)
+    {
+        return b1 + (s-a1)*(b2-b1)/(a2-a1);
     }
 }
