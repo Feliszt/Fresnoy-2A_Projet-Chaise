@@ -1,4 +1,5 @@
 using System;
+using System.ComponentModel.Composition.Hosting;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -7,6 +8,7 @@ public class GoToPose : MonoBehaviour
     public Transform objectToMove;
     public Transform targetPose;
     public Transform zeroPose;
+    public Transform initPose;
     public Transform firstPose;
     private Transform trueTargetPose;
     private Transform fromPose;
@@ -15,12 +17,14 @@ public class GoToPose : MonoBehaviour
     private float timeCount = 0.0f;
     public Boolean goToTarget = false;
     public Boolean goToZero = false;
+    public Boolean goToInit = false;
     public Boolean goToFirst = false;
     private Boolean go = false;
     private Boolean goPrev = false;
     private Boolean going = false;
     private Boolean goingPrev = false;
     private float distToTarget;
+    public Animator stateMachineAnimator;
 
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -32,7 +36,7 @@ public class GoToPose : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        go = goToTarget ^ goToZero ^ goToFirst;
+        go = goToTarget ^ goToZero ^ goToFirst ^ goToInit;
 
         if (!going && goToTarget) {
             trueTargetPose = targetPose;
@@ -44,7 +48,13 @@ public class GoToPose : MonoBehaviour
             Debug.Log("go to zero!");
         }
         
-        if (!going && goToFirst) {
+        if (!going && goToInit) {
+            trueTargetPose = initPose;
+            Debug.Log("go to init!");
+        }
+        
+        if (!going && goToFirst)
+        {
             trueTargetPose = firstPose;
             Debug.Log("go to first!");
         }
@@ -56,8 +66,13 @@ public class GoToPose : MonoBehaviour
             goToTarget = false;
             goToZero = false;
             goToFirst = false;
+            goToInit = false;
             go = false;
             going = true;
+            stateMachineAnimator.SetBool("AtZero", false);
+            stateMachineAnimator.SetBool("AtInit", false);
+            stateMachineAnimator.SetBool("AtFirst", false);
+            stateMachineAnimator.SetBool("AtTarget", false);
         }
 
         if (going) {
@@ -72,8 +87,13 @@ public class GoToPose : MonoBehaviour
             objectToMove.rotation = trueTargetPose.rotation;
         }
 
-        if (!going && goingPrev) {
+        if (!going && goingPrev)
+        {
             Debug.Log("arrived at target.");
+            if (trueTargetPose == zeroPose) stateMachineAnimator.SetBool("AtZero", true);
+            if (trueTargetPose == initPose) stateMachineAnimator.SetBool("AtInit", true);
+            if (trueTargetPose == firstPose) stateMachineAnimator.SetBool("AtFirst", true);
+            if (trueTargetPose == targetPose) stateMachineAnimator.SetBool("AtTarget", true);
         }
 
         timeCount += Time.deltaTime;
@@ -88,8 +108,13 @@ public class GoToPose : MonoBehaviour
     public void setGoToZero() {
         goToZero = true;
     }
+    
+    public void setGoToInit() {
+        goToInit = true;
+    }
 
-    public void setGoToTarget() {
+    public void setGoToTarget()
+    {
         goToTarget = true;
     }
     

@@ -59,7 +59,7 @@ MonoBehaviour:
   m_Version: 3
   m_AnimClip: {fileID: 0}
   m_Locked: 0
-  m_Muted: 1
+  m_Muted: 0
   m_CustomPlayableFullTypename: 
   m_Curves: {fileID: 0}
   m_Parent: {fileID: 11400000}
@@ -68,8 +68,8 @@ MonoBehaviour:
   - m_Version: 1
     m_Start: 0
     m_ClipIn: 0
-    m_Asset: {fileID: 1971970327331779489}
-    m_Duration: 2302.2835
+    m_Asset: {fileID: 8477197255541446154}
+    m_Duration: 2300.2835
     m_TimeScale: 1
     m_ParentTrack: {fileID: -8401514304437198670}
     m_EaseInDuration: 0
@@ -14038,23 +14038,6 @@ MonoBehaviour:
   m_Loop: 0
   m_Version: 1
   m_Rotation: {x: 0, y: 0, z: 0, w: 1}
---- !u!114 &1971970327331779489
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4f10dd60657c6004587f237a7e90f8e4, type: 3}
-  m_Name: AudioPlayableAsset
-  m_EditorClassIdentifier: 
-  m_Clip: {fileID: 8300000, guid: e153dc08e8a941047bc43aad8e65b7a8, type: 3}
-  m_Loop: 0
-  m_bufferingTime: 0.1
-  m_ClipProperties:
-    volume: 0.311
 --- !u!74 &2174153112195185055
 AnimationClip:
   m_ObjectHideFlags: 0
@@ -17894,7 +17877,7 @@ MonoBehaviour:
     m_Start: 2116.9500000000003
     m_ClipIn: 0
     m_Asset: {fileID: 8761387864338602513}
-    m_Duration: 184.08666666666704
+    m_Duration: 183.33349999999973
     m_TimeScale: 1
     m_ParentTrack: {fileID: 3957871650598112543}
     m_EaseInDuration: 0
@@ -25273,6 +25256,23 @@ MonoBehaviour:
   m_Loop: 0
   m_Version: 1
   m_Rotation: {x: 0, y: 0, z: 0, w: 1}
+--- !u!114 &8477197255541446154
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4f10dd60657c6004587f237a7e90f8e4, type: 3}
+  m_Name: AudioPlayableAsset
+  m_EditorClassIdentifier: 
+  m_Clip: {fileID: 8300000, guid: d0ac08b3d9abc024291e27beff25ad9a, type: 3}
+  m_Loop: 0
+  m_bufferingTime: 0.1
+  m_ClipProperties:
+    volume: 1
 --- !u!114 &8761387864338602513
 MonoBehaviour:
   m_ObjectHideFlags: 1
