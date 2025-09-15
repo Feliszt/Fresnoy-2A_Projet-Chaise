@@ -30,9 +30,19 @@ public class ControlTimeline : MonoBehaviour
         timeline.Play();
     }
 
+    public void ResumeTimeline()
+    {
+        timeline.Play();
+    }
+
     public void StopTimeline()
     {
         timeline.Stop();
+    }
+    
+    public void PauseTimeline()
+    {
+        timeline.Pause();
     }
 
     private void OnTimelineFinished(PlayableDirector pd)

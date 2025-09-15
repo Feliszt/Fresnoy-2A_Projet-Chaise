@@ -36,6 +36,7 @@ public class GoToFirst : StateMachineBehaviour
         GameObject target = GameObject.Find(TargetName);
         target.transform.position = first.transform.position;
         target.transform.rotation = first.transform.rotation;
+        //animator.SetBool("Play", false);
     }
 
     // OnStateMove is called right after Animator.OnAnimatorMove()

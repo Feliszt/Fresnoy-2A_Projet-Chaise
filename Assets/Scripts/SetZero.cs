@@ -16,6 +16,7 @@ public class SetZero : StateMachineBehaviour
             filinsH.SetZero();
             filinsH.SetSendPos(true);
             animator.SetBool("SendPos", true);
+            //animator.SetBool("Play", true);
         }
     }
 

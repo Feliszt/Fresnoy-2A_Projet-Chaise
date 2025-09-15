@@ -3,7 +3,9 @@ using UnityEngine;
 public class GoToInit : StateMachineBehaviour
 {
     public string MoverObjectName;
+    public string OSCWithMasterName;
     private GoToPose goToPose;
+    private OscWithMaster OSCWithMaster;
 
     // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
@@ -13,10 +15,13 @@ public class GoToInit : StateMachineBehaviour
 
         // get object dynamically
         GameObject mover = GameObject.Find(MoverObjectName);
-        if (mover != null)
+        GameObject OSCWithMasterObj = GameObject.Find(OSCWithMasterName);
+        if (mover != null && OSCWithMasterObj != null)
         {
             goToPose = mover.GetComponent<GoToPose>();
+            OSCWithMaster = OSCWithMasterObj.GetComponent<OscWithMaster>();
             goToPose.setGoToInit();
+            OSCWithMaster.SendReadyStatus();
         }
     }
 
