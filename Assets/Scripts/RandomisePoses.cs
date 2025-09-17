@@ -21,7 +21,8 @@ public class RandomisePoses : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (randomisePoses && !goToPose.isGoing()) {
+        if (randomisePoses && !goToPose.isGoing())
+        {
             goToPose.targetPose.position = getRandomPosition().Item1;
             goToPose.targetPose.eulerAngles = getRandomPosition().Item2;
             goToPose.goToTarget = true;
@@ -35,9 +36,10 @@ public class RandomisePoses : MonoBehaviour
         Gizmos.DrawWireCube(areaPosition, areaSize);
     }
 
-    Tuple<Vector3, Vector3> getRandomPosition() {
-        Vector3 randomPosition =  areaPosition + new Vector3(
-            UnityEngine.Random.Range(-areaSize.x / 2, areaSize.x / 2), 
+    Tuple<Vector3, Vector3> getRandomPosition()
+    {
+        Vector3 randomPosition = areaPosition + new Vector3(
+            UnityEngine.Random.Range(-areaSize.x / 2, areaSize.x / 2),
             UnityEngine.Random.Range(-areaSize.y / 2, areaSize.y / 2),
             UnityEngine.Random.Range(-areaSize.z / 2, areaSize.z / 2)
                                                             );
@@ -52,5 +54,10 @@ public class RandomisePoses : MonoBehaviour
     public void toggleRandomizePoses()
     {
         randomisePoses = !randomisePoses;
+    }
+    
+    public void setRandomizePosesFalse()
+    {
+        randomisePoses = false;
     }
 }

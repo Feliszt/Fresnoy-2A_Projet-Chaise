@@ -5,20 +5,22 @@ public class GoToFirst : StateMachineBehaviour
     public string MoverObjectName;
     public string FirstName;
     public string TargetName;
+    public string OSCWithMasterName;
     private GoToPose goToPose;
-    private RandomisePoses randomisePoses;
+    private OscWithMaster OSCWithMaster;
     
     // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
         // get object dynamically
         GameObject mover = GameObject.Find(MoverObjectName);
+        GameObject OSCWithMasterObj = GameObject.Find(OSCWithMasterName);
         if (mover != null)
         {
             goToPose = mover.GetComponent<GoToPose>();
-            randomisePoses = mover.GetComponent<RandomisePoses>();
-            randomisePoses.randomisePoses = false;
+            OSCWithMaster = OSCWithMasterObj.GetComponent<OscWithMaster>();
             goToPose.setGoToFirst();
+            OSCWithMaster.SendReadyStatus();
         }
     }
 

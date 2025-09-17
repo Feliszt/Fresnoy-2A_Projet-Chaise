@@ -4,8 +4,10 @@ public class GoToInit : StateMachineBehaviour
 {
     public string MoverObjectName;
     public string OSCWithMasterName;
+    public string OSCWithChataigneName;
     private GoToPose goToPose;
     private OscWithMaster OSCWithMaster;
+    private OSCSendTime OSCWithChataigne;    
 
     // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
@@ -16,12 +18,17 @@ public class GoToInit : StateMachineBehaviour
         // get object dynamically
         GameObject mover = GameObject.Find(MoverObjectName);
         GameObject OSCWithMasterObj = GameObject.Find(OSCWithMasterName);
-        if (mover != null && OSCWithMasterObj != null)
+        GameObject OSCWithChataigneObj = GameObject.Find(OSCWithChataigneName);
+        if (mover != null && OSCWithMasterObj != null && OSCWithChataigneObj != null)
         {
             goToPose = mover.GetComponent<GoToPose>();
             OSCWithMaster = OSCWithMasterObj.GetComponent<OscWithMaster>();
+            OSCWithChataigne = OSCWithChataigneObj.GetComponent<OSCSendTime>();
             goToPose.setGoToInit();
+            goToPose.goToTarget = false;
             OSCWithMaster.SendReadyStatus();
+            animator.SetBool("Stop", false);
+            OSCWithChataigne.oscGoTo(200);
         }
     }
 

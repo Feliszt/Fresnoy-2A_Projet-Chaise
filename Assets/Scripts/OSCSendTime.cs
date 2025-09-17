@@ -22,13 +22,13 @@ public class OSCSendTime : MonoBehaviour
     {
         if (sendTime)
         {
-            oscGoTo();
+            oscGoTo(timeline.time);
             sendTime = false;
         }
         
         if (timeline.state == PlayState.Playing && timelineStatePrev == PlayState.Paused)
         {
-            oscGoTo();
+            oscGoTo(timeline.time);
             oscPlay();
         }
 
@@ -41,14 +41,14 @@ public class OSCSendTime : MonoBehaviour
         timelineStatePrev = timeline.state;
     }
 
-    void oscGoTo()
+    public void oscGoTo(double timeToSend)
     {
         var message = new OSCMessage("/goTo");
-        message.AddValue(OSCValue.Float((float)timeline.time));
+        message.AddValue(OSCValue.Float((float)timeToSend));
         OSCTransmitter.Send(message);
     }
 
-    void oscPlay()
+    public void oscPlay()
     {
             var message = new OSCMessage("/play");
             OSCTransmitter.Send(message);
