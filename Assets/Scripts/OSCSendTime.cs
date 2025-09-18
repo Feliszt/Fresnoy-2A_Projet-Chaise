@@ -54,7 +54,7 @@ public class OSCSendTime : MonoBehaviour
             OSCTransmitter.Send(message);
     }
     
-    void oscPause()
+    public void oscPause()
     {
             var message = new OSCMessage("/pause");
             OSCTransmitter.Send(message);

@@ -3,9 +3,11 @@ using extOSC;
 
 public class OscWithMaster : MonoBehaviour
 {
-    private OSCTransmitter OSCTransmitter;
-    private OSCReceiver OSCReceiver;
+    public OSCTransmitter OSCWithChataigne; 
     public Animator stateMachine;
+    private OSCTransmitter OSCTransmitter;
+
+    private OSCReceiver OSCReceiver;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -18,6 +20,7 @@ public class OscWithMaster : MonoBehaviour
         OSCReceiver.Bind("/Felix/Ready", OSCMasterReady);
         OSCReceiver.Bind("/Felix/Play", OSCMasterPlay);
         OSCReceiver.Bind("/Felix/Stop", OSCMasterStop);
+        OSCReceiver.Bind("/Felix/Volume", OSCMasterVolume); 
     }
 
     private void OSCMasterConnect(OSCMessage messageIn)
@@ -45,6 +48,12 @@ public class OscWithMaster : MonoBehaviour
     {
         Debug.Log("[OSCWITHMASTER] -> message : Stop");
         stateMachine.SetBool("Stop", true);
+    }
+
+    private void OSCMasterVolume(OSCMessage messageIn)
+    {
+        Debug.Log("[OSCWITHMASTER] -> message : Volume");
+        OSCWithChataigne.Send(messageIn);
     }
 
     public void SendReadyStatus()

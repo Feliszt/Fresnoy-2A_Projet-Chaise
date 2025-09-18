@@ -1,3 +1,4 @@
+using Obi.Samples;
 using UnityEngine;
 using UnityEngine.Playables;
 using UnityEngine.UI;
@@ -19,19 +20,18 @@ public class updateSliderTimeline : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        slider.interactable = stateMachine.GetCurrentAnimatorStateInfo(0).IsName("PlayTimeline") && !followPose.enabled;
-        if (slider.interactable)
+        slider.interactable = false;
+        if (stateMachine.GetCurrentAnimatorStateInfo(0).IsName("PlayTimeline"))
         {
             if (timeline.state == PlayState.Playing)
             {
                 slider.value = (float)(timeline.time / timeline.duration);
             }
 
-            if (timeline.state == PlayState.Paused)
+            if (timeline.state == PlayState.Paused && !followPose.enabled)
             {
+                slider.interactable = true;
                 timeline.time = slider.value * timeline.duration;
-                timeline.Play();
-                timeline.Pause();
             }
         }
     }

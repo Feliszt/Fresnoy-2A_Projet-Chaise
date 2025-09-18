@@ -28,7 +28,9 @@ public class GoToInit : StateMachineBehaviour
             goToPose.goToTarget = false;
             OSCWithMaster.SendReadyStatus();
             animator.SetBool("Stop", false);
+            OSCWithChataigne.oscPlay();
             OSCWithChataigne.oscGoTo(200);
+            OSCWithChataigne.oscPause();
         }
     }
 
